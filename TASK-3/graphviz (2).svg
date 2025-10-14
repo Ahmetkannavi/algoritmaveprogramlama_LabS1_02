@@ -1,0 +1,285 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="791pt" height="888pt" viewBox="0.00 0.00 791.00 888.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 884.4)">
+<title>HastaneSistemi</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-884.4 786.59,-884.4 786.59,4 -4,4"/>
+<!-- StartR -->
+<g id="node1" class="node">
+<title>StartR</title>
+<path fill="none" stroke="black" d="M260.88,-880.4C260.88,-880.4 125.69,-880.4 125.69,-880.4 119.69,-880.4 113.69,-874.4 113.69,-868.4 113.69,-868.4 113.69,-856.4 113.69,-856.4 113.69,-850.4 119.69,-844.4 125.69,-844.4 125.69,-844.4 260.88,-844.4 260.88,-844.4 266.88,-844.4 272.88,-850.4 272.88,-856.4 272.88,-856.4 272.88,-868.4 272.88,-868.4 272.88,-874.4 266.88,-880.4 260.88,-880.4"/>
+<text xml:space="preserve" text-anchor="middle" x="193.28" y="-858.2" font-family="Arial" font-size="14.00">BAŞLA: Randevu Alma</text>
+</g>
+<!-- KimlikR -->
+<g id="node2" class="node">
+<title>KimlikR</title>
+<path fill="none" stroke="black" d="M242.96,-807.4C242.96,-807.4 143.6,-807.4 143.6,-807.4 137.6,-807.4 131.6,-801.4 131.6,-795.4 131.6,-795.4 131.6,-783.4 131.6,-783.4 131.6,-777.4 137.6,-771.4 143.6,-771.4 143.6,-771.4 242.96,-771.4 242.96,-771.4 248.96,-771.4 254.96,-777.4 254.96,-783.4 254.96,-783.4 254.96,-795.4 254.96,-795.4 254.96,-801.4 248.96,-807.4 242.96,-807.4"/>
+<text xml:space="preserve" text-anchor="middle" x="193.28" y="-785.2" font-family="Arial" font-size="14.00">Kimlik doğrulama</text>
+</g>
+<!-- StartR&#45;&gt;KimlikR -->
+<g id="edge1" class="edge">
+<title>StartR-&gt;KimlikR</title>
+<path fill="none" stroke="black" d="M193.28,-844.21C193.28,-836.63 193.28,-827.5 193.28,-818.94"/>
+<polygon fill="black" stroke="black" points="196.78,-818.94 193.28,-808.94 189.78,-818.94 196.78,-818.94"/>
+</g>
+<!-- KontrolKimlikR -->
+<g id="node3" class="node">
+<title>KontrolKimlikR</title>
+<path fill="none" stroke="black" d="M181.41,-732.66C181.41,-732.66 82.55,-718.14 82.55,-718.14 76.61,-717.27 76.61,-715.53 82.55,-714.66 82.55,-714.66 181.41,-700.14 181.41,-700.14 187.35,-699.27 199.22,-699.27 205.15,-700.14 205.15,-700.14 304.02,-714.66 304.02,-714.66 309.96,-715.53 309.96,-717.27 304.02,-718.14 304.02,-718.14 205.15,-732.66 205.15,-732.66 199.22,-733.53 187.35,-733.53 181.41,-732.66"/>
+<text xml:space="preserve" text-anchor="middle" x="193.28" y="-712.2" font-family="Arial" font-size="14.00">Kimlik geçerli mi?</text>
+</g>
+<!-- KimlikR&#45;&gt;KontrolKimlikR -->
+<g id="edge2" class="edge">
+<title>KimlikR-&gt;KontrolKimlikR</title>
+<path fill="none" stroke="black" d="M193.28,-771.21C193.28,-763.63 193.28,-754.5 193.28,-745.94"/>
+<polygon fill="black" stroke="black" points="196.78,-745.94 193.28,-735.94 189.78,-745.94 196.78,-745.94"/>
+</g>
+<!-- Poliklinik -->
+<g id="node4" class="node">
+<title>Poliklinik</title>
+<path fill="none" stroke="black" d="M179.68,-645.6C179.68,-645.6 88.88,-645.6 88.88,-645.6 82.88,-645.6 76.88,-639.6 76.88,-633.6 76.88,-633.6 76.88,-621.6 76.88,-621.6 76.88,-615.6 82.88,-609.6 88.88,-609.6 88.88,-609.6 179.68,-609.6 179.68,-609.6 185.68,-609.6 191.68,-615.6 191.68,-621.6 191.68,-621.6 191.68,-633.6 191.68,-633.6 191.68,-639.6 185.68,-645.6 179.68,-645.6"/>
+<text xml:space="preserve" text-anchor="middle" x="134.28" y="-623.4" font-family="Arial" font-size="14.00">Poliklinik seçimi</text>
+</g>
+<!-- KontrolKimlikR&#45;&gt;Poliklinik -->
+<g id="edge3" class="edge">
+<title>KontrolKimlikR-&gt;Poliklinik</title>
+<path fill="none" stroke="black" d="M182.73,-699.88C174.39,-687.6 162.53,-670.15 152.63,-655.59"/>
+<polygon fill="black" stroke="black" points="155.53,-653.63 147.01,-647.32 149.74,-657.56 155.53,-653.63"/>
+<text xml:space="preserve" text-anchor="middle" x="186.95" y="-667.8" font-family="Times,serif" font-size="14.00">EVET</text>
+</g>
+<!-- MesajNO_R -->
+<g id="node10" class="node">
+<title>MesajNO_R</title>
+<path fill="none" stroke="black" d="M322.59,-591.6C322.59,-591.6 153.98,-591.6 153.98,-591.6 147.98,-591.6 141.98,-585.6 141.98,-579.6 141.98,-579.6 141.98,-567.6 141.98,-567.6 141.98,-561.6 147.98,-555.6 153.98,-555.6 153.98,-555.6 322.59,-555.6 322.59,-555.6 328.59,-555.6 334.59,-561.6 334.59,-567.6 334.59,-567.6 334.59,-579.6 334.59,-579.6 334.59,-585.6 328.59,-591.6 322.59,-591.6"/>
+<text xml:space="preserve" text-anchor="middle" x="238.28" y="-569.4" font-family="Arial" font-size="14.00">Kimlik doğrulama başarısız</text>
+</g>
+<!-- KontrolKimlikR&#45;&gt;MesajNO_R -->
+<g id="edge4" class="edge">
+<title>KontrolKimlikR-&gt;MesajNO_R</title>
+<path fill="none" stroke="black" d="M201.33,-699.25C204.06,-693.39 207,-686.68 209.28,-680.4 218.6,-654.72 226.58,-624.6 231.8,-603.08"/>
+<polygon fill="black" stroke="black" points="235.15,-604.1 234.05,-593.57 228.34,-602.49 235.15,-604.1"/>
+<text xml:space="preserve" text-anchor="middle" x="236.97" y="-667.8" font-family="Times,serif" font-size="14.00">HAYIR</text>
+</g>
+<!-- Doktor -->
+<g id="node5" class="node">
+<title>Doktor</title>
+<path fill="none" stroke="black" d="M194.47,-537.6C194.47,-537.6 60.09,-537.6 60.09,-537.6 54.09,-537.6 48.09,-531.6 48.09,-525.6 48.09,-525.6 48.09,-513.6 48.09,-513.6 48.09,-507.6 54.09,-501.6 60.09,-501.6 60.09,-501.6 194.47,-501.6 194.47,-501.6 200.47,-501.6 206.47,-507.6 206.47,-513.6 206.47,-513.6 206.47,-525.6 206.47,-525.6 206.47,-531.6 200.47,-537.6 194.47,-537.6"/>
+<text xml:space="preserve" text-anchor="middle" x="127.28" y="-515.4" font-family="Arial" font-size="14.00">Doktor listesi görüntüle</text>
+</g>
+<!-- Poliklinik&#45;&gt;Doktor -->
+<g id="edge5" class="edge">
+<title>Poliklinik-&gt;Doktor</title>
+<path fill="none" stroke="black" d="M133.16,-609.57C132.09,-593.36 130.46,-568.66 129.18,-549.39"/>
+<polygon fill="black" stroke="black" points="132.68,-549.2 128.53,-539.45 125.69,-549.66 132.68,-549.2"/>
+</g>
+<!-- Saat -->
+<g id="node6" class="node">
+<title>Saat</title>
+<path fill="none" stroke="black" d="M189.42,-448.8C189.42,-448.8 65.14,-448.8 65.14,-448.8 59.14,-448.8 53.14,-442.8 53.14,-436.8 53.14,-436.8 53.14,-424.8 53.14,-424.8 53.14,-418.8 59.14,-412.8 65.14,-412.8 65.14,-412.8 189.42,-412.8 189.42,-412.8 195.42,-412.8 201.42,-418.8 201.42,-424.8 201.42,-424.8 201.42,-436.8 201.42,-436.8 201.42,-442.8 195.42,-448.8 189.42,-448.8"/>
+<text xml:space="preserve" text-anchor="middle" x="127.28" y="-426.6" font-family="Arial" font-size="14.00">Uygun saatleri göster</text>
+</g>
+<!-- Doktor&#45;&gt;Saat -->
+<g id="edge6" class="edge">
+<title>Doktor-&gt;Saat</title>
+<path fill="none" stroke="black" d="M127.28,-501.45C127.28,-489.76 127.28,-473.99 127.28,-460.42"/>
+<polygon fill="black" stroke="black" points="130.78,-460.72 127.28,-450.72 123.78,-460.72 130.78,-460.72"/>
+</g>
+<!-- Onay -->
+<g id="node7" class="node">
+<title>Onay</title>
+<path fill="none" stroke="black" d="M179.27,-340.8C179.27,-340.8 71.3,-340.8 71.3,-340.8 65.3,-340.8 59.3,-334.8 59.3,-328.8 59.3,-328.8 59.3,-316.8 59.3,-316.8 59.3,-310.8 65.3,-304.8 71.3,-304.8 71.3,-304.8 179.27,-304.8 179.27,-304.8 185.27,-304.8 191.27,-310.8 191.27,-316.8 191.27,-316.8 191.27,-328.8 191.27,-328.8 191.27,-334.8 185.27,-340.8 179.27,-340.8"/>
+<text xml:space="preserve" text-anchor="middle" x="125.28" y="-318.6" font-family="Arial" font-size="14.00">Randevuyu onayla</text>
+</g>
+<!-- Saat&#45;&gt;Onay -->
+<g id="edge7" class="edge">
+<title>Saat-&gt;Onay</title>
+<path fill="none" stroke="black" d="M126.96,-412.77C126.66,-396.56 126.19,-371.86 125.83,-352.59"/>
+<polygon fill="black" stroke="black" points="129.33,-352.59 125.64,-342.65 122.33,-352.72 129.33,-352.59"/>
+</g>
+<!-- SMS -->
+<g id="node8" class="node">
+<title>SMS</title>
+<path fill="none" stroke="black" d="M152.19,-232.8C152.19,-232.8 82.38,-232.8 82.38,-232.8 76.38,-232.8 70.38,-226.8 70.38,-220.8 70.38,-220.8 70.38,-208.8 70.38,-208.8 70.38,-202.8 76.38,-196.8 82.38,-196.8 82.38,-196.8 152.19,-196.8 152.19,-196.8 158.19,-196.8 164.19,-202.8 164.19,-208.8 164.19,-208.8 164.19,-220.8 164.19,-220.8 164.19,-226.8 158.19,-232.8 152.19,-232.8"/>
+<text xml:space="preserve" text-anchor="middle" x="117.28" y="-210.6" font-family="Arial" font-size="14.00">SMS gönder</text>
+</g>
+<!-- Onay&#45;&gt;SMS -->
+<g id="edge8" class="edge">
+<title>Onay-&gt;SMS</title>
+<path fill="none" stroke="black" d="M124,-304.77C122.77,-288.56 120.91,-263.86 119.46,-244.59"/>
+<polygon fill="black" stroke="black" points="122.95,-244.36 118.7,-234.65 115.97,-244.88 122.95,-244.36"/>
+</g>
+<!-- MesajOK_R -->
+<g id="node9" class="node">
+<title>MesajOK_R</title>
+<path fill="none" stroke="black" d="M198.56,-124.8C198.56,-124.8 12,-124.8 12,-124.8 6,-124.8 0,-118.8 0,-112.8 0,-112.8 0,-100.8 0,-100.8 0,-94.8 6,-88.8 12,-88.8 12,-88.8 198.56,-88.8 198.56,-88.8 204.56,-88.8 210.56,-94.8 210.56,-100.8 210.56,-100.8 210.56,-112.8 210.56,-112.8 210.56,-118.8 204.56,-124.8 198.56,-124.8"/>
+<text xml:space="preserve" text-anchor="middle" x="105.28" y="-102.6" font-family="Arial" font-size="14.00">Randevu başarıyla oluşturuldu</text>
+</g>
+<!-- SMS&#45;&gt;MesajOK_R -->
+<g id="edge9" class="edge">
+<title>SMS-&gt;MesajOK_R</title>
+<path fill="none" stroke="black" d="M115.35,-196.77C113.51,-180.49 110.7,-155.62 108.51,-136.32"/>
+<polygon fill="black" stroke="black" points="112.02,-136.19 107.42,-126.64 105.06,-136.97 112.02,-136.19"/>
+</g>
+<!-- End -->
+<g id="node21" class="node">
+<title>End</title>
+<path fill="none" stroke="black" d="M416.28,-36C416.28,-36 386.28,-36 386.28,-36 380.28,-36 374.28,-30 374.28,-24 374.28,-24 374.28,-12 374.28,-12 374.28,-6 380.28,0 386.28,0 386.28,0 416.28,0 416.28,0 422.28,0 428.28,-6 428.28,-12 428.28,-12 428.28,-24 428.28,-24 428.28,-30 422.28,-36 416.28,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="401.28" y="-13.8" font-family="Arial" font-size="14.00">End</text>
+</g>
+<!-- MesajOK_R&#45;&gt;End -->
+<g id="edge19" class="edge">
+<title>MesajOK_R-&gt;End</title>
+<path fill="none" stroke="black" d="M126.01,-88.38C140.93,-76.79 162.06,-62.22 183.05,-54 242.95,-30.54 317.97,-22.8 362.63,-20.25"/>
+<polygon fill="black" stroke="black" points="362.79,-23.74 372.61,-19.74 362.44,-16.75 362.79,-23.74"/>
+<text xml:space="preserve" text-anchor="middle" x="203.67" y="-58.2" font-family="Times,serif" font-size="14.00">BİTİR</text>
+</g>
+<!-- MesajNO_R&#45;&gt;End -->
+<g id="edge20" class="edge">
+<title>MesajNO_R-&gt;End</title>
+<path fill="none" stroke="black" d="M238.28,-555.19C238.28,-535.88 238.28,-503.81 238.28,-476.2 238.28,-476.2 238.28,-476.2 238.28,-105.8 238.28,-49.67 314.51,-29.72 362.71,-22.71"/>
+<polygon fill="black" stroke="black" points="363.04,-26.2 372.5,-21.43 362.13,-19.26 363.04,-26.2"/>
+</g>
+<!-- StartT -->
+<g id="node11" class="node">
+<title>StartT</title>
+<path fill="none" stroke="black" d="M719.54,-734.4C719.54,-734.4 575.02,-734.4 575.02,-734.4 569.02,-734.4 563.02,-728.4 563.02,-722.4 563.02,-722.4 563.02,-710.4 563.02,-710.4 563.02,-704.4 569.02,-698.4 575.02,-698.4 575.02,-698.4 719.54,-698.4 719.54,-698.4 725.54,-698.4 731.54,-704.4 731.54,-710.4 731.54,-710.4 731.54,-722.4 731.54,-722.4 731.54,-728.4 725.54,-734.4 719.54,-734.4"/>
+<text xml:space="preserve" text-anchor="middle" x="647.28" y="-712.2" font-family="Arial" font-size="14.00">BAŞLA: Tahlil Sonuçları</text>
+</g>
+<!-- KimlikT -->
+<g id="node12" class="node">
+<title>KimlikT</title>
+<path fill="none" stroke="black" d="M696.96,-645.6C696.96,-645.6 597.6,-645.6 597.6,-645.6 591.6,-645.6 585.6,-639.6 585.6,-633.6 585.6,-633.6 585.6,-621.6 585.6,-621.6 585.6,-615.6 591.6,-609.6 597.6,-609.6 597.6,-609.6 696.96,-609.6 696.96,-609.6 702.96,-609.6 708.96,-615.6 708.96,-621.6 708.96,-621.6 708.96,-633.6 708.96,-633.6 708.96,-639.6 702.96,-645.6 696.96,-645.6"/>
+<text xml:space="preserve" text-anchor="middle" x="647.28" y="-623.4" font-family="Arial" font-size="14.00">Kimlik doğrulama</text>
+</g>
+<!-- StartT&#45;&gt;KimlikT -->
+<g id="edge10" class="edge">
+<title>StartT-&gt;KimlikT</title>
+<path fill="none" stroke="black" d="M647.28,-698.25C647.28,-686.56 647.28,-670.79 647.28,-657.22"/>
+<polygon fill="black" stroke="black" points="650.78,-657.52 647.28,-647.52 643.78,-657.52 650.78,-657.52"/>
+</g>
+<!-- KontrolKimlikT -->
+<g id="node13" class="node">
+<title>KontrolKimlikT</title>
+<path fill="none" stroke="black" d="M635.41,-535.86C635.41,-535.86 536.55,-521.34 536.55,-521.34 530.61,-520.47 530.61,-518.73 536.55,-517.86 536.55,-517.86 635.41,-503.34 635.41,-503.34 641.35,-502.47 653.22,-502.47 659.15,-503.34 659.15,-503.34 758.02,-517.86 758.02,-517.86 763.96,-518.73 763.96,-520.47 758.02,-521.34 758.02,-521.34 659.15,-535.86 659.15,-535.86 653.22,-536.73 641.35,-536.73 635.41,-535.86"/>
+<text xml:space="preserve" text-anchor="middle" x="647.28" y="-515.4" font-family="Arial" font-size="14.00">Kimlik geçerli mi?</text>
+</g>
+<!-- KimlikT&#45;&gt;KontrolKimlikT -->
+<g id="edge11" class="edge">
+<title>KimlikT-&gt;KontrolKimlikT</title>
+<path fill="none" stroke="black" d="M647.28,-609.57C647.28,-593.36 647.28,-568.66 647.28,-549.39"/>
+<polygon fill="black" stroke="black" points="650.78,-549.45 647.28,-539.45 643.78,-549.45 650.78,-549.45"/>
+</g>
+<!-- TahlilVar -->
+<g id="node14" class="node">
+<title>TahlilVar</title>
+<path fill="none" stroke="black" d="M520.4,-447.11C520.4,-447.11 417.74,-432.49 417.74,-432.49 411.8,-431.65 411.8,-429.95 417.74,-429.11 417.74,-429.11 520.4,-414.49 520.4,-414.49 526.34,-413.65 538.22,-413.65 544.16,-414.49 544.16,-414.49 646.82,-429.11 646.82,-429.11 652.76,-429.95 652.76,-431.65 646.82,-432.49 646.82,-432.49 544.16,-447.11 544.16,-447.11 538.22,-447.95 526.34,-447.95 520.4,-447.11"/>
+<text xml:space="preserve" text-anchor="middle" x="532.28" y="-426.6" font-family="Arial" font-size="14.00">Tahlil mevcut mu?</text>
+</g>
+<!-- KontrolKimlikT&#45;&gt;TahlilVar -->
+<g id="edge12" class="edge">
+<title>KontrolKimlikT-&gt;TahlilVar</title>
+<path fill="none" stroke="black" d="M628.03,-504.07C609.62,-490.18 581.64,-469.06 560.67,-453.23"/>
+<polygon fill="black" stroke="black" points="562.89,-450.52 552.8,-447.29 558.67,-456.11 562.89,-450.52"/>
+<text xml:space="preserve" text-anchor="middle" x="617.97" y="-471" font-family="Times,serif" font-size="14.00">EVET</text>
+</g>
+<!-- MesajNO_T -->
+<g id="node20" class="node">
+<title>MesajNO_T</title>
+<path fill="none" stroke="black" d="M770.59,-394.8C770.59,-394.8 601.98,-394.8 601.98,-394.8 595.98,-394.8 589.98,-388.8 589.98,-382.8 589.98,-382.8 589.98,-370.8 589.98,-370.8 589.98,-364.8 595.98,-358.8 601.98,-358.8 601.98,-358.8 770.59,-358.8 770.59,-358.8 776.59,-358.8 782.59,-364.8 782.59,-370.8 782.59,-370.8 782.59,-382.8 782.59,-382.8 782.59,-388.8 776.59,-394.8 770.59,-394.8"/>
+<text xml:space="preserve" text-anchor="middle" x="686.28" y="-372.6" font-family="Arial" font-size="14.00">Kimlik doğrulama başarısız</text>
+</g>
+<!-- KontrolKimlikT&#45;&gt;MesajNO_T -->
+<g id="edge13" class="edge">
+<title>KontrolKimlikT-&gt;MesajNO_T</title>
+<path fill="none" stroke="black" d="M652.13,-501.98C656.24,-487.85 662.23,-467.02 667.28,-448.8 671.17,-434.77 675.36,-419.15 678.82,-406.13"/>
+<polygon fill="black" stroke="black" points="682.2,-407.07 681.37,-396.5 675.43,-405.27 682.2,-407.07"/>
+<text xml:space="preserve" text-anchor="middle" x="684.06" y="-471" font-family="Times,serif" font-size="14.00">HAYIR</text>
+</g>
+<!-- SonucHazir -->
+<g id="node15" class="node">
+<title>SonucHazir</title>
+<path fill="none" stroke="black" d="M377.41,-339.07C377.41,-339.07 277.76,-324.53 277.76,-324.53 271.82,-323.67 271.82,-321.93 277.76,-321.07 277.76,-321.07 377.41,-306.53 377.41,-306.53 383.35,-305.67 395.22,-305.67 401.16,-306.53 401.16,-306.53 500.8,-321.07 500.8,-321.07 506.74,-321.93 506.74,-323.67 500.8,-324.53 500.8,-324.53 401.16,-339.07 401.16,-339.07 395.22,-339.93 383.35,-339.93 377.41,-339.07"/>
+<text xml:space="preserve" text-anchor="middle" x="389.28" y="-318.6" font-family="Arial" font-size="14.00">Sonuç hazır mı?</text>
+</g>
+<!-- TahlilVar&#45;&gt;SonucHazir -->
+<g id="edge14" class="edge">
+<title>TahlilVar-&gt;SonucHazir</title>
+<path fill="none" stroke="black" d="M511.33,-415.33C502.4,-409.09 491.89,-401.66 482.52,-394.8 460.29,-378.53 435.49,-359.61 417.06,-345.39"/>
+<polygon fill="black" stroke="black" points="419.3,-342.7 409.25,-339.35 415.02,-348.24 419.3,-342.7"/>
+<text xml:space="preserve" text-anchor="middle" x="500.4" y="-372.6" font-family="Times,serif" font-size="14.00">EVET</text>
+</g>
+<!-- MesajYok -->
+<g id="node19" class="node">
+<title>MesajYok</title>
+<path fill="none" stroke="black" d="M591.48,-286.8C591.48,-286.8 485.08,-286.8 485.08,-286.8 479.08,-286.8 473.08,-280.8 473.08,-274.8 473.08,-274.8 473.08,-262.8 473.08,-262.8 473.08,-256.8 479.08,-250.8 485.08,-250.8 485.08,-250.8 591.48,-250.8 591.48,-250.8 597.48,-250.8 603.48,-256.8 603.48,-262.8 603.48,-262.8 603.48,-274.8 603.48,-274.8 603.48,-280.8 597.48,-286.8 591.48,-286.8"/>
+<text xml:space="preserve" text-anchor="middle" x="538.28" y="-264.6" font-family="Arial" font-size="14.00">Tahlil bulunamadı</text>
+</g>
+<!-- TahlilVar&#45;&gt;MesajYok -->
+<g id="edge15" class="edge">
+<title>TahlilVar-&gt;MesajYok</title>
+<path fill="none" stroke="black" d="M532.92,-412.68C533.95,-385.39 535.96,-331.75 537.21,-298.52"/>
+<polygon fill="black" stroke="black" points="540.69,-298.92 537.57,-288.8 533.7,-298.66 540.69,-298.92"/>
+<text xml:space="preserve" text-anchor="middle" x="557.06" y="-372.6" font-family="Times,serif" font-size="14.00">HAYIR</text>
+</g>
+<!-- Goruntule -->
+<g id="node16" class="node">
+<title>Goruntule</title>
+<path fill="none" stroke="black" d="M375.64,-232.8C375.64,-232.8 280.92,-232.8 280.92,-232.8 274.92,-232.8 268.92,-226.8 268.92,-220.8 268.92,-220.8 268.92,-208.8 268.92,-208.8 268.92,-202.8 274.92,-196.8 280.92,-196.8 280.92,-196.8 375.64,-196.8 375.64,-196.8 381.64,-196.8 387.64,-202.8 387.64,-208.8 387.64,-208.8 387.64,-220.8 387.64,-220.8 387.64,-226.8 381.64,-232.8 375.64,-232.8"/>
+<text xml:space="preserve" text-anchor="middle" x="328.28" y="-210.6" font-family="Arial" font-size="14.00">Sonuç görüntüle</text>
+</g>
+<!-- SonucHazir&#45;&gt;Goruntule -->
+<g id="edge16" class="edge">
+<title>SonucHazir-&gt;Goruntule</title>
+<path fill="none" stroke="black" d="M374.62,-306.53C369.44,-300.65 363.84,-293.7 359.52,-286.8 351.08,-273.34 343.79,-257.2 338.38,-243.72"/>
+<polygon fill="black" stroke="black" points="341.7,-242.62 334.83,-234.55 335.17,-245.14 341.7,-242.62"/>
+<text xml:space="preserve" text-anchor="middle" x="377.4" y="-264.6" font-family="Times,serif" font-size="14.00">EVET</text>
+</g>
+<!-- MesajHazirDegil -->
+<g id="node18" class="node">
+<title>MesajHazirDegil</title>
+<path fill="none" stroke="black" d="M504.5,-178.8C504.5,-178.8 342.07,-178.8 342.07,-178.8 336.07,-178.8 330.07,-172.8 330.07,-166.8 330.07,-166.8 330.07,-154.8 330.07,-154.8 330.07,-148.8 336.07,-142.8 342.07,-142.8 342.07,-142.8 504.5,-142.8 504.5,-142.8 510.5,-142.8 516.5,-148.8 516.5,-154.8 516.5,-154.8 516.5,-166.8 516.5,-166.8 516.5,-172.8 510.5,-178.8 504.5,-178.8"/>
+<text xml:space="preserve" text-anchor="middle" x="423.28" y="-156.6" font-family="Arial" font-size="14.00">Sonuçlar henüz hazır değil</text>
+</g>
+<!-- SonucHazir&#45;&gt;MesajHazirDegil -->
+<g id="edge17" class="edge">
+<title>SonucHazir-&gt;MesajHazirDegil</title>
+<path fill="none" stroke="black" d="M392.86,-304.98C398.66,-277.68 410.18,-223.44 417.26,-190.12"/>
+<polygon fill="black" stroke="black" points="420.68,-190.87 419.34,-180.36 413.84,-189.41 420.68,-190.87"/>
+<text xml:space="preserve" text-anchor="middle" x="426.27" y="-264.6" font-family="Times,serif" font-size="14.00">HAYIR</text>
+</g>
+<!-- PDF -->
+<g id="node17" class="node">
+<title>PDF</title>
+<path fill="none" stroke="black" d="M361.45,-124.8C361.45,-124.8 311.11,-124.8 311.11,-124.8 305.11,-124.8 299.11,-118.8 299.11,-112.8 299.11,-112.8 299.11,-100.8 299.11,-100.8 299.11,-94.8 305.11,-88.8 311.11,-88.8 311.11,-88.8 361.45,-88.8 361.45,-88.8 367.45,-88.8 373.45,-94.8 373.45,-100.8 373.45,-100.8 373.45,-112.8 373.45,-112.8 373.45,-118.8 367.45,-124.8 361.45,-124.8"/>
+<text xml:space="preserve" text-anchor="middle" x="336.28" y="-102.6" font-family="Arial" font-size="14.00">PDF indir</text>
+</g>
+<!-- Goruntule&#45;&gt;PDF -->
+<g id="edge18" class="edge">
+<title>Goruntule-&gt;PDF</title>
+<path fill="none" stroke="black" d="M327.64,-196.53C327.32,-182.12 327.34,-161.07 329.28,-142.8 329.5,-140.72 329.79,-138.58 330.12,-136.43"/>
+<polygon fill="black" stroke="black" points="333.55,-137.1 331.89,-126.64 326.66,-135.85 333.55,-137.1"/>
+</g>
+<!-- PDF&#45;&gt;End -->
+<g id="edge21" class="edge">
+<title>PDF-&gt;End</title>
+<path fill="none" stroke="black" d="M349.12,-88.65C358.32,-76.37 370.89,-59.59 381.38,-45.58"/>
+<polygon fill="black" stroke="black" points="384.14,-47.72 387.34,-37.62 378.54,-43.53 384.14,-47.72"/>
+</g>
+<!-- MesajHazirDegil&#45;&gt;End -->
+<g id="edge22" class="edge">
+<title>MesajHazirDegil-&gt;End</title>
+<path fill="none" stroke="black" d="M420.58,-142.54C416.89,-118.89 410.21,-76.12 405.76,-47.64"/>
+<polygon fill="black" stroke="black" points="409.24,-47.24 404.24,-37.9 402.32,-48.32 409.24,-47.24"/>
+</g>
+<!-- MesajYok&#45;&gt;End -->
+<g id="edge23" class="edge">
+<title>MesajYok-&gt;End</title>
+<path fill="none" stroke="black" d="M539.23,-250.67C539.92,-225.65 538.52,-178.25 521.28,-142.8 501.33,-101.75 462.56,-65.67 434.48,-43.22"/>
+<polygon fill="black" stroke="black" points="437,-40.74 426.97,-37.34 432.69,-46.26 437,-40.74"/>
+</g>
+<!-- MesajNO_T&#45;&gt;End -->
+<g id="edge24" class="edge">
+<title>MesajNO_T-&gt;End</title>
+<path fill="none" stroke="black" d="M677.71,-358.65C668.23,-338.08 654.28,-302.29 654.28,-269.8 654.28,-269.8 654.28,-269.8 654.28,-105.8 654.28,-60.93 510.12,-34.34 439.44,-24"/>
+<polygon fill="black" stroke="black" points="440.25,-20.58 429.86,-22.64 439.26,-27.51 440.25,-20.58"/>
+</g>
+</g>
+</svg>
