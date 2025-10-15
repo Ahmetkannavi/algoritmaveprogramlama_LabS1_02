@@ -1,0 +1,64 @@
+digraph AkilliEvGuvenlik {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontname="Arial"];
+
+    Start [label="BAŞLA", shape=ellipse, style=filled, fillcolor=lightgray];
+    CheckSystem [label="Sistem aktif mi?", shape=diamond];
+    Passive [label="Sistem pasif\nProgram sonlanır", shape=ellipse, style=filled, fillcolor=lightcoral];
+    Active [label="Sistem aktif\nSensörler izleniyor"];
+    SensorLoop [label="Sensör okuma döngüsü", shape=diamond];
+    MotionSensor [label="Hareket sensörü okuma"];
+    DoorSensor [label="Kapı/Pencere sensörü okuma"];
+    CameraCheck [label="Hareket veya kapı/pencere tespit edildi mi?", shape=diamond];
+    CameraActive [label="Kamera aktif edilir\nKayda başlanır"];
+    OwnerCheck [label="Ev sahibi evde mi?", shape=diamond];
+    FalseAlarm [label="Yanlış alarm"];
+    TrueAlarm [label="Gerçek alarm"];
+    Level1 [label="Alarm seviyesi 1 (Düşük)"];
+    Level2 [label="Alarm seviyesi 2 (Orta)"];
+    Level3 [label="Alarm seviyesi 3 (Yüksek)"];
+    Notify [label="Bildirim gönder (SMS + App + Email)"];
+    NoNotify [label="Yanlış alarm – Bildirim yok"];
+    ResetCheck [label="Alarm sıfırlansın mı?", shape=diamond];
+    Reset [label="Alarm sıfırlandı"];
+    Continue [label="Sistem izlemeye devam ediyor"];
+    Wait [label="5 saniye bekle\nve sensörleri tekrar kontrol et"];
+    Stop [label="Sistem kapatıldı", shape=ellipse, style=filled, fillcolor=lightgray];
+
+    // Flow connections
+    Start -> CheckSystem;
+    CheckSystem -> Active [label="Evet"];
+    CheckSystem -> Passive [label="Hayır"];
+
+    Active -> SensorLoop;
+    SensorLoop -> MotionSensor;
+    MotionSensor -> DoorSensor;
+    DoorSensor -> CameraCheck;
+
+    CameraCheck -> CameraActive [label="Evet"];
+    CameraCheck -> OwnerCheck [label="Hayır"];
+
+    CameraActive -> OwnerCheck;
+
+    OwnerCheck -> FalseAlarm [label="Evet"];
+    OwnerCheck -> TrueAlarm [label="Hayır"];
+
+    FalseAlarm -> NoNotify;
+    TrueAlarm -> Level1;
+    
+    Level1 -> Notify;
+    Level2 -> Notify;
+    Level3 -> Notify;
+
+    NoNotify -> ResetCheck;
+    Notify -> ResetCheck;
+
+    ResetCheck -> Reset [label="Evet"];
+    ResetCheck -> Continue [label="Hayır"];
+
+    Reset -> Wait;
+    Continue -> Wait;
+
+    Wait -> SensorLoop [label="Sistem aktif"];
+    SensorLoop -> Stop [label="Sistem kapalı"];
+}
