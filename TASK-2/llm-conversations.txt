@@ -1,0 +1,180 @@
+Online Alı¸sveri¸s Sepet Sistemi için detaylı pseudocode yaz. Kullanıcı giri¸s kontrol¨u (ko¸sul) Ur¨un kategorileri arasında gezinme (d¨ong¨u) ¨ Ur¨un sepete ekleme ¨ Stok kontrol¨u (ko¸sul) Sepeti g¨or¨unt¨uleme ve d¨uzenleme (d¨ong¨u) ˙ Indirim kodu uygulanabilir (ko¸sul) Minimum 50 TL kontrol¨u (ko¸sul) Kargo ¨ucreti hesaplama (ko¸sul: ¿200 TL ¨ucretsiz) Odeme y¨ontemi se¸cimi (ko¸sul) ¨ Sipari¸s onayı
+BAŞLA
+    YAZ "Online Alışveriş Sistemine Hoş Geldiniz."
+    YAZ "Lütfen kullanıcı adınızı ve şifrenizi giriniz."
+    OKU kullanıcı_adı, şifre
+
+    EĞER kullanıcı_adı ve şifre doğru İSE
+        YAZ "Giriş başarılı! Hoş geldiniz."
+        
+        DÖNGÜ ürün_kategorisi seçilene kadar
+            YAZ "Lütfen bir ürün kategorisi seçiniz (Elektronik, Giyim, Ev vb.)"
+            OKU kategori
+            YAZ kategori içindeki ürünleri listele
+            
+            YAZ "Sepete eklemek istediğiniz ürünün adını yazınız veya 'çıkış' yazarak menüye dönünüz."
+            OKU ürün
+            
+            EĞER ürün ≠ "çıkış" İSE
+                EĞER stokta ürün mevcut İSE
+                    YAZ "Ürün sepete eklendi."
+                    sepete_ekle(ürün)
+                DEĞİLSE
+                    YAZ "Stokta yeterli ürün yok!"
+                BİTİR EĞER
+            DEĞİLSE
+                YAZ "Kategori menüsüne dönülüyor..."
+            BİTİR EĞER
+        DÖNGÜ SONU
+
+        DÖNGÜ kullanıcı sepeti düzenlemek istedikçe
+            YAZ "Sepetinizdeki ürünler:"
+            sepeti_görüntüle()
+            YAZ "Ürün silmek istiyor musunuz? (E/H)"
+            OKU cevap
+            EĞER cevap = "E" İSE
+                YAZ "Silmek istediğiniz ürünün adını yazınız:"
+                OKU silinecek
+                sepetten_sil(silinecek)
+            DEĞİLSE
+                ÇIK
+            BİTİR EĞER
+        DÖNGÜ SONU
+
+        YAZ "İndirim kodunuz var mı? (E/H)"
+        OKU indirim_var
+        EĞER indirim_var = "E" İSE
+            OKU indirim_kodu
+            EĞER indirim_kodu geçerli İSE
+                indirimi_uygula()
+            DEĞİLSE
+                YAZ "Geçersiz indirim kodu!"
+            BİTİR EĞER
+        BİTİR EĞER
+
+        toplam_tutar = sepet_toplamı()
+        EĞER toplam_tutar < 50 TL İSE
+            YAZ "Minimum alışveriş tutarı 50 TL olmalıdır!"
+            YAZ "Lütfen sepetinize daha fazla ürün ekleyiniz."
+            GİT ürün_ekleme_adımına
+        BİTİR EĞER
+
+        EĞER toplam_tutar > 200 TL İSE
+            kargo_ücreti = 0
+            YAZ "Kargo ücretsiz!"
+        DEĞİLSE
+            kargo_ücreti = 30
+            YAZ "Kargo ücreti 30 TL olarak eklendi."
+        BİTİR EĞER
+
+        YAZ "Ödeme yöntemini seçiniz: (1) Kredi Kartı (2) Havale (3) Kapıda Ödeme"
+        OKU ödeme_yöntemi
+
+        EĞER ödeme_yöntemi = 1 İSE
+            YAZ "Kart bilgilerinizi giriniz."
+        DEĞİLSE EĞER ödeme_yöntemi = 2 İSE
+            YAZ "IBAN bilgisi ekranda gösteriliyor."
+        DEĞİLSE
+            YAZ "Kapıda ödeme seçildi."
+        BİTİR EĞER
+
+        YAZ "Siparişi onaylıyor musunuz? (E/H)"
+        OKU onay
+        EĞER onay = "E" İSE
+            YAZ "Siparişiniz başarıyla oluşturuldu. Teşekkür ederiz!"
+        DEĞİLSE
+            YAZ "Sipariş iptal edildi."
+        BİTİR EĞER
+
+    DEĞİLSE
+        YAZ "Giriş başarısız! Kullanıcı bilgilerinizi kontrol ediniz."
+    BİTİR EĞER
+BİTİR
+bu kodu graphız dot koduna çevır
+Elbette! Aşağıda verdiğin Online Alışveriş Sepet Sistemi pseudocode’unun Graphviz (DOT) formatına dönüştürülmüş hali yer alıyor. Bu kodu bir .dot dosyasına kaydedip Graphviz Online
+ gibi bir sitede açarsan, akış diyagramı (flowchart) olarak görebilirsin
+digraph OnlineShoppingCart {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontsize=11];
+
+    start [label="BAŞLA"];
+    login [label="Kullanıcı adı ve şifre gir"];
+    loginCheck [shape=diamond, label="Kullanıcı girişi doğru mu?"];
+    categoryLoop [label="Ürün kategorisi seç\n(DÖNGÜ)"];
+    stockCheck [shape=diamond, label="Stokta ürün var mı?"];
+    addCart [label="Ürün sepete eklendi"];
+    noStock [label="Stokta yok!"];
+    viewCart [label="Sepeti görüntüle ve düzenle\n(DÖNGÜ)"];
+    discountAsk [label="İndirim kodu var mı?"];
+    discountValid [shape=diamond, label="İndirim kodu geçerli mi?"];
+    discountApplied [label="İndirim uygulandı"];
+    invalidDiscount [label="Geçersiz indirim kodu"];
+    totalCheck [shape=diamond, label="Toplam < 50 TL mi?"];
+    addMore [label="Daha fazla ürün ekle"];
+    shippingCheck [shape=diamond, label="Toplam > 200 TL mi?"];
+    freeShipping [label="Kargo ücretsiz"];
+    paidShipping [label="Kargo 30 TL"];
+    paymentMethod [label="Ödeme yöntemi seç\n(1-Kart, 2-Havale, 3-Kapıda)"];
+    confirm [shape=diamond, label="Sipariş onaylandı mı?"];
+    orderSuccess [label="Sipariş başarıyla oluşturuldu"];
+    orderCancel [label="Sipariş iptal edildi"];
+    loginFail [label="Giriş başarısız!"];
+    end [shape=oval, label="BİTİR"];
+
+    // Flow connections
+    start -> login -> loginCheck;
+    loginCheck -> categoryLoop [label="Evet"];
+    loginCheck -> loginFail [label="Hayır"];
+    loginFail -> end;
+
+    categoryLoop -> stockCheck;
+    stockCheck -> addCart [label="Evet"];
+    stockCheck -> noStock [label="Hayır"];
+    addCart -> viewCart;
+    noStock -> viewCart;
+
+    viewCart -> discountAsk;
+    discountAsk -> discountValid [label="Evet"];
+    discountAsk -> totalCheck [label="Hayır"];
+
+    discountValid -> discountApplied [label="Evet"];
+    discountValid -> invalidDiscount [label="Hayır"];
+    discountApplied -> totalCheck;
+    invalidDiscount -> totalCheck;
+
+    totalCheck -> addMore [label="Evet"];
+    totalCheck -> shippingCheck [label="Hayır"];
+    addMore -> categoryLoop;
+
+    shippingCheck -> freeShipping [label="Evet"];
+    shippingCheck -> paidShipping [label="Hayır"];
+    freeShipping -> paymentMethod;
+    paidShipping -> paymentMethod;
+
+    paymentMethod -> confirm;
+    confirm -> orderSuccess [label="Evet"];
+    confirm -> orderCancel [label="Hayır"];
+    orderSuccess -> end;
+    orderCancel -> end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
