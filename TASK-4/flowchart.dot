@@ -1,0 +1,62 @@
+digraph DersKayitSistemi {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontname="Arial"];
+
+    Start [label="BAŞLA", shape=ellipse, style=filled, fillcolor=lightgray];
+    Login [label="Öğrenci Girişi\n(ogr_no + şifre)"];
+    CheckLogin [label="Giriş bilgileri doğru mu?", shape=diamond];
+    LoginFail [label="Hatalı giriş\nProgram sonlandırılır"];
+    ShowList [label="Ders listesini görüntüle"];
+    LoopMain [label="Ders ekle/çıkar döngüsü", shape=diamond];
+    
+    AddCourse [label="Ders ekle"];
+    Kontenjan [label="Kontenjan uygun mu?", shape=diamond];
+    OnKosul [label="Ön koşul sağlandı mı?", shape=diamond];
+    Zaman [label="Zaman çakışması var mı?", shape=diamond];
+    Kredi [label="Toplam kredi ≤ 35 mi?", shape=diamond];
+    EkleOk [label="Ders eklendi\ntoplam_kredi += ders.kredi"];
+    
+    RemoveCourse [label="Ders çıkar"];
+    ShowSummary [label="Kayıt özeti göster"];
+    CheckAdvisor [label="GPA < 2.5 mi?", shape=diamond];
+    AdvisorApproval [label="Danışman onayı gerekli"];
+    CheckConfirm [label="Kayıt onaylıyor musun?", shape=diamond];
+    Success [label="Kayıt tamamlandı", shape=ellipse, style=filled, fillcolor=lightgreen];
+    Cancel [label="Kayıt iptal edildi", shape=ellipse, style=filled, fillcolor=lightcoral];
+
+    // Flow connections
+    Start -> Login -> CheckLogin;
+    CheckLogin -> ShowList [label="Evet"];
+    CheckLogin -> LoginFail [label="Hayır"];
+    ShowList -> LoopMain;
+
+    LoopMain -> AddCourse [label="1 - Ekle"];
+    LoopMain -> RemoveCourse [label="2 - Çıkar"];
+    LoopMain -> ShowSummary [label="3 - Özet"];
+    LoopMain -> CheckAdvisor [label="0 - Çıkış"];
+
+    AddCourse -> Kontenjan;
+    Kontenjan -> OnKosul [label="Evet"];
+    Kontenjan -> LoopMain [label="Hayır (Dolu)"];
+
+    OnKosul -> Zaman [label="Evet"];
+    OnKosul -> LoopMain [label="Hayır"];
+
+    Zaman -> Kredi [label="Hayır (Çakışma yok)"];
+    Zaman -> LoopMain [label="Evet (Çakışma var)"];
+
+    Kredi -> EkleOk [label="Evet"];
+    Kredi -> LoopMain [label="Hayır (Aşıldı)"];
+    
+    EkleOk -> LoopMain;
+
+    RemoveCourse -> LoopMain;
+    ShowSummary -> LoopMain;
+
+    CheckAdvisor -> AdvisorApproval [label="Evet"];
+    CheckAdvisor -> CheckConfirm [label="Hayır"];
+    AdvisorApproval -> CheckConfirm;
+
+    CheckConfirm -> Success [label="Evet"];
+    CheckConfirm -> Cancel [label="Hayır"];
+}
