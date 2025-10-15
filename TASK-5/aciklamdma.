@@ -1,0 +1,8 @@
+Ahmed Kannavi
+240541603
+Bu grafik, **Akıllı Ev Güvenlik Sistemi**nin çalışma mantığını gösteren bir **akış diyagramıdır**.
+Sistem aktif hale getirildikten sonra sensörler sürekli olarak hareket ve kapı/pencere durumunu izler.
+Herhangi bir anormallik tespit edildiğinde kamera devreye girer ve görüntü kaydı başlatılır.
+Sistem, ev sahibinin evde olup olmadığını kontrol ederek yanlış alarm olasılığını değerlendirir.
+Tespit edilen duruma göre alarm seviyesi (1–düşük, 2–orta, 3–yüksek) belirlenir.
+Gerçek alarm durumunda SMS, uygulama bildirimi ve e-posta yoluyla uyarılar gönderilir, ardından sistem izlemeye devam eder.
