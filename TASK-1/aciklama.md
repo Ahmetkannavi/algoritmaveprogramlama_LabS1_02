@@ -1,4 +1,4 @@
-İsim - Soy isim : ahmed kannavi
+İsim - Soy isim : Ahmed Kannavi
 Öğrenci No: 240541603
 
 sistemin kısa açıklamas:
