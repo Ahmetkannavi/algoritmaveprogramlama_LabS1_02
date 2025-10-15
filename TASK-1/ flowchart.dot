@@ -1,0 +1,53 @@
+digraph ATM_ParaCekme {
+  rankdir=TB;
+  node [shape=box, fontname="Helvetica", fontsize=10];
+  edge [fontname="Helvetica", fontsize=9];
+
+  Start [shape=oval, label="BAŞLA"];
+  InsertCard [label="Kart takıldı"];
+  ReadCard [label="Kart okunuyor"];
+  CardError [color=red, label="Kart okunamadı\nİşlem sonlandır"];
+  
+  PinStart [label="PIN gir (3 hak)"];
+  PinCheck [shape=diamond, label="PIN doğru mu?"];
+  PinWrong [label="Hatalı PIN\nKalan hak = 3 - deneme"];
+  BlockCard [color=red, label="3 hatalı giriş\nKart bloke\nİşlem sonlandır"];
+
+  Balance [label="Bakiye sorgula"];
+  GetAmount [label="Çekilmek istenen tutarı gir"];
+  EnoughBalance [shape=diamond, label="Bakiye yeterli mi?"];
+  Mult20 [shape=diamond, label="20 TL'nin katı mı?"];
+  LimitCheck [shape=diamond, label="Günlük limit aşılıyor mu?"];
+
+  Dispense [style=filled, fillcolor="#e0ffe0", label="Para ver\nFiş çıkar\nBakiye güncelle"];
+  AskRepeat [shape=diamond, label="Başka işlem yapmak ister misiniz?"];
+  End [shape=oval, label="SON\nKart iade edilir"];
+
+  # Akış bağlantıları
+  Start -> InsertCard -> ReadCard;
+  ReadCard -> CardError [label="Hatalı", color=red, style=dashed];
+  ReadCard -> PinStart [label="Doğru"];
+
+  PinStart -> PinCheck;
+  PinCheck -> Balance [label="Evet", color=green];
+  PinCheck -> PinWrong [label="Hayır", color=red];
+  PinWrong -> PinCheck [label="Hak kaldıysa"];
+  PinWrong -> BlockCard [label="3 hata", color=red];
+  BlockCard -> End;
+
+  Balance -> GetAmount;
+  GetAmount -> EnoughBalance;
+
+  EnoughBalance -> Mult20 [label="Evet"];
+  EnoughBalance -> AskRepeat [label="Hayır (Yetersiz bakiye)"];
+
+  Mult20 -> LimitCheck [label="Evet"];
+  Mult20 -> AskRepeat [label="Hayır (20 TL katı değil)"];
+
+  LimitCheck -> Dispense [label="Hayır (Aşılmadı)"];
+  LimitCheck -> AskRepeat [label="Evet (Limit aşıldı)"];
+
+  Dispense -> AskRepeat;
+  AskRepeat -> Balance [label="Evet"];
+  AskRepeat -> End [label="Hayır"];
+}
