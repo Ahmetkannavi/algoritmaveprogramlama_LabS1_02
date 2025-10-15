@@ -1,0 +1,64 @@
+digraph OnlineShoppingCart {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontsize=11];
+
+    start [label="BAŞLA"];
+    login [label="Kullanıcı adı ve şifre gir"];
+    loginCheck [shape=diamond, label="Kullanıcı girişi doğru mu?"];
+    categoryLoop [label="Ürün kategorisi seç\n(DÖNGÜ)"];
+    stockCheck [shape=diamond, label="Stokta ürün var mı?"];
+    addCart [label="Ürün sepete eklendi"];
+    noStock [label="Stokta yok!"];
+    viewCart [label="Sepeti görüntüle ve düzenle\n(DÖNGÜ)"];
+    discountAsk [label="İndirim kodu var mı?"];
+    discountValid [shape=diamond, label="İndirim kodu geçerli mi?"];
+    discountApplied [label="İndirim uygulandı"];
+    invalidDiscount [label="Geçersiz indirim kodu"];
+    totalCheck [shape=diamond, label="Toplam < 50 TL mi?"];
+    addMore [label="Daha fazla ürün ekle"];
+    shippingCheck [shape=diamond, label="Toplam > 200 TL mi?"];
+    freeShipping [label="Kargo ücretsiz"];
+    paidShipping [label="Kargo 30 TL"];
+    paymentMethod [label="Ödeme yöntemi seç\n(1-Kart, 2-Havale, 3-Kapıda)"];
+    confirm [shape=diamond, label="Sipariş onaylandı mı?"];
+    orderSuccess [label="Sipariş başarıyla oluşturuldu"];
+    orderCancel [label="Sipariş iptal edildi"];
+    loginFail [label="Giriş başarısız!"];
+    end [shape=oval, label="BİTİR"];
+
+    // Flow connections
+    start -> login -> loginCheck;
+    loginCheck -> categoryLoop [label="Evet"];
+    loginCheck -> loginFail [label="Hayır"];
+    loginFail -> end;
+
+    categoryLoop -> stockCheck;
+    stockCheck -> addCart [label="Evet"];
+    stockCheck -> noStock [label="Hayır"];
+    addCart -> viewCart;
+    noStock -> viewCart;
+
+    viewCart -> discountAsk;
+    discountAsk -> discountValid [label="Evet"];
+    discountAsk -> totalCheck [label="Hayır"];
+
+    discountValid -> discountApplied [label="Evet"];
+    discountValid -> invalidDiscount [label="Hayır"];
+    discountApplied -> totalCheck;
+    invalidDiscount -> totalCheck;
+
+    totalCheck -> addMore [label="Evet"];
+    totalCheck -> shippingCheck [label="Hayır"];
+    addMore -> categoryLoop;
+
+    shippingCheck -> freeShipping [label="Evet"];
+    shippingCheck -> paidShipping [label="Hayır"];
+    freeShipping -> paymentMethod;
+    paidShipping -> paymentMethod;
+
+    paymentMethod -> confirm;
+    confirm -> orderSuccess [label="Evet"];
+    confirm -> orderCancel [label="Hayır"];
+    orderSuccess -> end;
+    orderCancel -> end;
+}
