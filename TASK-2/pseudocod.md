@@ -1,76 +1,91 @@
-digraph EticaretAkis {
-  rankdir=TB;
-  node [fontname="Arial"];
+BAŞLA
+    YAZ "Online Alışveriş Sistemine Hoş Geldiniz."
+    YAZ "Lütfen kullanıcı adınızı ve şifrenizi giriniz."
+    OKU kullanıcı_adı, şifre
 
-  start [shape=oval,label="BAŞLA"];
-  login [shape=box,label="Kullanıcı Girişi (3 hak)"];
-  login_check [shape=diamond,label="Giriş doğru mu?"];
-  start_cart [shape=box,label="Sepet Başlat"];
-  add_loop [shape=box,label="Ürün Ekleme Döngüsü"];
-  stok_check [shape=diamond,label="Stok yeterli mi?"];
-  add_cart [shape=box,label="Sepete Ekle / Rezerve Et"];
-  stok_insuff [shape=box,label="Yetersiz stok - Uyarı"];
-  continue_check [shape=diamond,label="Devam edilsin mi?"];
-  discount_q [shape=diamond,label="İndirim kodu var mı?"];
-  discount_check [shape=diamond,label="Kod geçerli mi?"];
-  calc_shipping [shape=box,label="Kargo Hesapla (ağırlık, adres)"];
-  show_total [shape=box,label="Toplamı göster"];
-  payment_choice [shape=diamond,label="Ödeme yöntemi seçimi"];
-  pay_cc [shape=box,label="Kredi Kartı bilgileri al"];
-  card_valid [shape=diamond,label="Kart bilgileri geçerli mi?"];
-  gateway [shape=diamond,label="Ödeme ağ geçidi onayladı mı?"];
-  pay_bank [shape=box,label="Havale: Onay bekle"];
-  pay_cod [shape=box,label="Kapıda ödeme seçildi"];
-  payment_success [shape=box,label="Ödeme başarılı"];
-  payment_failed [shape=box,label="Ödeme/Doğrulama hatası"];
-  order_create [shape=box,label="Sipariş oluştur ve stok kesinleştir"];
-  order_cod [shape=box,label="Sipariş oluştur (Kapıda)"];
-  rollback [shape=box,label="Stok iade et, sipariş iptal"];
-  end [shape=oval,label="BİTİR"];
+    EĞER kullanıcı_adı ve şifre doğru İSE
+        YAZ "Giriş başarılı! Hoş geldiniz."
+        
+        DÖNGÜ ürün_kategorisi seçilene kadar
+            YAZ "Lütfen bir ürün kategorisi seçiniz (Elektronik, Giyim, Ev vb.)"
+            OKU kategori
+            YAZ kategori içindeki ürünleri listele
+            
+            YAZ "Sepete eklemek istediğiniz ürünün adını yazınız veya 'çıkış' yazarak menüye dönünüz."
+            OKU ürün
+            
+            EĞER ürün ≠ "çıkış" İSE
+                EĞER stokta ürün mevcut İSE
+                    YAZ "Ürün sepete eklendi."
+                    sepete_ekle(ürün)
+                DEĞİLSE
+                    YAZ "Stokta yeterli ürün yok!"
+                BİTİR EĞER
+            DEĞİLSE
+                YAZ "Kategori menüsüne dönülüyor..."
+            BİTİR EĞER
+        DÖNGÜ SONU
 
-  // Akış
-  start -> login -> login_check;
-  login_check -> start_cart [label="EVET"];
-  login_check -> end [label="HAYIR (3 hak bitti)"];
+        DÖNGÜ kullanıcı sepeti düzenlemek istedikçe
+            YAZ "Sepetinizdeki ürünler:"
+            sepeti_görüntüle()
+            YAZ "Ürün silmek istiyor musunuz? (E/H)"
+            OKU cevap
+            EĞER cevap = "E" İSE
+                YAZ "Silmek istediğiniz ürünün adını yazınız:"
+                OKU silinecek
+                sepetten_sil(silinecek)
+            DEĞİLSE
+                ÇIK
+            BİTİR EĞER
+        DÖNGÜ SONU
 
-  start_cart -> add_loop;
-  add_loop -> stok_check;
-  stok_check -> add_cart [label="EVET"];
-  stok_check -> stok_insuff [label="HAYIR"];
-  stok_insuff -> continue_check;
-  add_cart -> continue_check;
-  continue_check -> add_loop [label="EVET"];
-  continue_check -> discount_q [label="HAYIR"];
+        YAZ "İndirim kodunuz var mı? (E/H)"
+        OKU indirim_var
+        EĞER indirim_var = "E" İSE
+            OKU indirim_kodu
+            EĞER indirim_kodu geçerli İSE
+                indirimi_uygula()
+            DEĞİLSE
+                YAZ "Geçersiz indirim kodu!"
+            BİTİR EĞER
+        BİTİR EĞER
 
-  discount_q -> discount_check [label="EVET"];
-  discount_q -> calc_shipping [label="HAYIR"];
-  discount_check -> calc_shipping [label="GEÇERLİ / EVET"];
-  discount_check -> calc_shipping [label="GEÇERSİZ / HAYIR"];
+        toplam_tutar = sepet_toplamı()
+        EĞER toplam_tutar < 50 TL İSE
+            YAZ "Minimum alışveriş tutarı 50 TL olmalıdır!"
+            YAZ "Lütfen sepetinize daha fazla ürün ekleyiniz."
+            GİT ürün_ekleme_adımına
+        BİTİR EĞER
 
-  calc_shipping -> show_total -> payment_choice;
+        EĞER toplam_tutar > 200 TL İSE
+            kargo_ücreti = 0
+            YAZ "Kargo ücretsiz!"
+        DEĞİLSE
+            kargo_ücreti = 30
+            YAZ "Kargo ücreti 30 TL olarak eklendi."
+        BİTİR EĞER
 
-  // Ödeme dallanması
-  payment_choice -> pay_cc [label="KrediKartı"];
-  payment_choice -> pay_bank [label="Havale"];
-  payment_choice -> pay_cod [label="Kapıda"];
+        YAZ "Ödeme yöntemini seçiniz: (1) Kredi Kartı (2) Havale (3) Kapıda Ödeme"
+        OKU ödeme_yöntemi
 
-  // Kredi kartı akışı
-  pay_cc -> card_valid;
-  card_valid -> gateway [label="EVET"];
-  card_valid -> payment_failed [label="HAYIR"];
-  gateway -> payment_success [label="EVET"];
-  gateway -> payment_failed [label="HAYIR"];
+        EĞER ödeme_yöntemi = 1 İSE
+            YAZ "Kart bilgilerinizi giriniz."
+        DEĞİLSE EĞER ödeme_yöntemi = 2 İSE
+            YAZ "IBAN bilgisi ekranda gösteriliyor."
+        DEĞİLSE
+            YAZ "Kapıda ödeme seçildi."
+        BİTİR EĞER
 
-  // Havale akışı
-  pay_bank -> payment_success [label="Havale onaylandı / EVET"];
-  pay_bank -> payment_failed [label="Onay yok / HAYIR"];
+        YAZ "Siparişi onaylıyor musunuz? (E/H)"
+        OKU onay
+        EĞER onay = "E" İSE
+            YAZ "Siparişiniz başarıyla oluşturuldu. Teşekkür ederiz!"
+        DEĞİLSE
+            YAZ "Sipariş iptal edildi."
+        BİTİR EĞER
 
-  // Kapıda
-  pay_cod -> order_cod;
-
-  // Sonuç işlemleri
-  payment_success -> order_create;
-  order_create -> end;
-  order_cod -> end;
-  payment_failed -> rollback -> end;
-}
+    DEĞİLSE
+        YAZ "Giriş başarısız! Kullanıcı bilgilerinizi kontrol ediniz."
+    BİTİR EĞER
+BİTİR
