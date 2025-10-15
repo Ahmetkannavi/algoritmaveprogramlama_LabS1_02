@@ -1,69 +1,91 @@
-digraph ATM {
-  rankdir=TB;
-  node [fontname="Helvetica", fontsize=10];
-  edge [fontname="Helvetica", fontsize=9];
+BAŞLA
 
-  Start [shape=oval, label="BAŞLA\n(Kart tak)"];
-  ReadCard [shape=box, label="Kart oku\n(karte bilgisi al)"];
-  CardErr [shape=box, color=red, label="Kart okunamadı\nİşlem sonlandır"];
-  GetAccount [shape=box, label="Hesap bilgilerini al\n(bakiye,günlük limit,çekilen)"];
+  # 1. Kart takma işlemi
+  YAZ "Lütfen kartınızı takınız..."
+  OKU kart
 
-  PIN_LOOP [shape=diamond, label="PIN doğru mu?\n(3 deneme)"];
-  PIN_Input [shape=box, label="PIN gir"];
-  PIN_Incorrect [shape=box, label="Yanlış PIN\n(kalan hak göster)"];
-  CardBlock [shape=box, color=red, label="3 başarısız -> Kart bloke\nİşlem sonlandır"];
+  EĞER kart = HATALI İSE
+      YAZ "Kart okunamadı! Lütfen tekrar deneyiniz."
+      SON
+  SON
 
-  MainLoop [shape=diamond, label="Yeni işlem ister misiniz?"];
-  GetAmount [shape=box, label="Tutar gir (20 TL katları)"];
-  CancelCheck [shape=diamond, label="İptal mi?"];
-  AmountPositive [shape=diamond, label="Tutar > 0?"];
-  MultipleOf20 [shape=diamond, label="20 TL'nin katı mı?"];
-  DailyLimitCheck [shape=diamond, label="Günlük limit aşılıyor mu?"];
-  BalanceCheck [shape=diamond, label="Bakiye yeterli mi?"];
-  Confirm [shape=diamond, label="Onaylıyor musunuz?"];
+  # 2. PIN doğrulama (3 hak)
+  deneme = 0
+  PIN_DOGRULANDI = HAYIR
 
-  Dispense [shape=box, style=filled, fillcolor="#e0ffe0", label="Para ver\nHesabı güncelle\nFiş yazdır"];
-  Cancelled [shape=box, color=orange, label="İşlem iptal edildi"];
-  End [shape=oval, label="SON\nKartını al"];
+  DÖNGÜ (deneme < 3) BAŞ
+      YAZ "Lütfen 4 haneli PIN kodunuzu giriniz:"
+      OKU girilenPIN
 
-  // Akış
-  Start -> ReadCard;
-  ReadCard -> CardErr [label="okunamadı", color=red, style=dashed];
-  ReadCard -> GetAccount;
+      EĞER girilenPIN = DOGRU_PIN İSE
+          PIN_DOGRULANDI = EVET
+          ÇIKIŞ_DÖNGÜ
+      DEĞİLSE
+          deneme = deneme + 1
+          KALAN = 3 - deneme
+          EĞER KALAN > 0 İSE
+              YAZ "Hatalı PIN! Kalan deneme hakkı: " + KALAN
+          DEĞİLSE
+              YAZ "3 kez hatalı giriş yaptınız. Kartınız bloke edildi."
+              SON
+          SON
+      SON
+  SON DÖNGÜ
 
-  GetAccount -> PIN_Input;
-  PIN_Input -> PIN_LOOP;
-  PIN_LOOP -> PIN_Incorrect [label="Hayır", color=red];
-  PIN_LOOP -> MainLoop [label="Evet", color=green];
+  # 3. PIN doğruysa devam et
+  EĞER PIN_DOGRULANDI = EVET İSE
 
-  PIN_Incorrect -> PIN_Input [label="Hak kaldıysa"];
-  PIN_Incorrect -> CardBlock [label="Hak bitti", color=red];
-  CardBlock -> End;
+      bakiye = 1500
+      gunlukLimit = 2000
+      gunlukCekilen = 0
 
-  MainLoop -> GetAmount [label="Evet"];
-  MainLoop -> End [label="Hayır"];
+      islemDevam = EVET
 
-  GetAmount -> CancelCheck;
-  CancelCheck -> Cancelled [label="Evet"];
-  CancelCheck -> AmountPositive [label="Hayır"];
+      DÖNGÜ (islemDevam = EVET) BAŞ
+          # 4. Bakiye sorgulama
+          YAZ "Mevcut bakiyeniz: " + bakiye + " TL"
 
-  Cancelled -> MainLoop [label="Yeni işlem? (E/H)"];
+          # 5. Çekilmek istenen tutarı al
+          YAZ "Çekmek istediğiniz tutarı giriniz (20 TL katları):"
+          OKU tutar
 
-  AmountPositive -> MultipleOf20 [label="Evet"];
-  AmountPositive -> Cancelled [label="Hayır"];
+          # 6. Yetersiz bakiye kontrolü
+          EĞER tutar > bakiye İSE
+              YAZ "Yetersiz bakiye! İşlem iptal edildi."
+          DEĞİLSE
 
-  MultipleOf20 -> DailyLimitCheck [label="Evet"];
-  MultipleOf20 -> Cancelled [label="Hayır"];
+              # 7. 20 TL’nin katı mı?
+              EĞER tutar MOD 20 <> 0 İSE
+                  YAZ "Tutar 20 TL’nin katı olmalıdır!"
+              DEĞİLSE
 
-  DailyLimitCheck -> BalanceCheck [label="Limit aşılmıyor"];
-  DailyLimitCheck -> Cancelled [label="Limit aşılıyor"];
+                  # 8. Günlük limit kontrolü
+                  EĞER (gunlukCekilen + tutar) > gunlukLimit İSE
+                      YAZ "Günlük limit aşılıyor! Limit: " + gunlukLimit + " TL"
+                  DEĞİLSE
+                      # 9. Para verme işlemi
+                      bakiye = bakiye - tutar
+                      gunlukCekilen = gunlukCekilen + tutar
+                      YAZ tutar + " TL veriliyor..."
+                      YAZ "Lütfen paranızı ve fişinizi alınız."
+                  SON
+              SON
+          SON
 
-  BalanceCheck -> Confirm [label="Evet"];
-  BalanceCheck -> Cancelled [label="Hayır (yetersiz bakiye)"];
+          # 10. Başka işlem seçeneği
+          YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+          OKU cevap
+          EĞER cevap = "E" İSE
+              islemDevam = EVET
+          DEĞİLSE
+              islemDevam = HAYIR
+              YAZ "Kartınızı alınız. İyi günler!"
+              SON
+          SON
+      SON DÖNGÜ
 
-  Confirm -> Dispense [label="Evet"];
-  Confirm -> Cancelled [label="Hayır"];
+  DEĞİLSE
+      YAZ "PIN doğrulanamadı. İşlem sonlandırıldı."
+  SON
 
-  Dispense -> MainLoop [label="Başka işlem?"];
-  Cancelled -> End [label="Kartı al"];
-}
+SON
