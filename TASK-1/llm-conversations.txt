@@ -1,0 +1,259 @@
+ATM Para çekme Sistemi için detaylı pseudocode yaz.  Kart takılır ve PIN sorulur
+ 3 hatalı PIN giri¸sinden sonra kart bloke olur (d¨ong¨u)
+ Bakiye sorgulanır
+ C¸ekilmek istenen tutar girilir
+ Yetersiz bakiye kontrol¨u yapılır (ko¸sul)
+ 20 TL’nin katları olmalı (ko¸sul)
+ G¨unl¨uk limit kontrol¨u (ko¸sul)
+ Para verilir ve fi¸s ¸cıkar
+ Ba¸ska i¸slem yapmak ister misiniz? (d¨ong¨u)
+BAŞLA
+Aşağıda senin isteğine uygun şekilde yazılmış, detaylı ve düzenli Türkçe pseudocode yer alıyor.
+İçinde BAŞLA, OKU, YAZ, EĞER-İSE, DÖNGÜ yapıları kullanılmıştır ve verilen tüm koşullar adım adım işlenmiştir.
+  # 1. Kart takma işlemi
+  YAZ "Lütfen kartınızı takınız..."
+  OKU kart
+
+  EĞER kart = HATALI İSE
+      YAZ "Kart okunamadı! Lütfen tekrar deneyiniz."
+      SON
+  SON
+
+  # 2. PIN doğrulama (3 hak)
+  deneme = 0
+  PIN_DOGRULANDI = HAYIR
+
+  DÖNGÜ (deneme < 3) BAŞ
+      YAZ "Lütfen 4 haneli PIN kodunuzu giriniz:"
+      OKU girilenPIN
+
+      EĞER girilenPIN = DOGRU_PIN İSE
+          PIN_DOGRULANDI = EVET
+          ÇIKIŞ_DÖNGÜ
+      DEĞİLSE
+          deneme = deneme + 1
+          KALAN = 3 - deneme
+          EĞER KALAN > 0 İSE
+              YAZ "Hatalı PIN! Kalan deneme hakkı: " + KALAN
+          DEĞİLSE
+              YAZ "3 kez hatalı giriş yaptınız. Kartınız bloke edildi."
+              SON
+          SON
+      SON
+  SON DÖNGÜ
+
+  # 3. PIN doğruysa devam et
+  EĞER PIN_DOGRULANDI = EVET İSE
+
+      bakiye = 1500
+      gunlukLimit = 2000
+      gunlukCekilen = 0
+
+      islemDevam = EVET
+
+      DÖNGÜ (islemDevam = EVET) BAŞ
+          # 4. Bakiye sorgulama
+          YAZ "Mevcut bakiyeniz: " + bakiye + " TL"
+
+          # 5. Çekilmek istenen tutarı al
+          YAZ "Çekmek istediğiniz tutarı giriniz (20 TL katları):"
+          OKU tutar
+
+          # 6. Yetersiz bakiye kontrolü
+          EĞER tutar > bakiye İSE
+              YAZ "Yetersiz bakiye! İşlem iptal edildi."
+          DEĞİLSE
+
+              # 7. 20 TL’nin katı mı?
+              EĞER tutar MOD 20 <> 0 İSE
+                  YAZ "Tutar 20 TL’nin katı olmalıdır!"
+              DEĞİLSE
+
+                  # 8. Günlük limit kontrolü
+                  EĞER (gunlukCekilen + tutar) > gunlukLimit İSE
+                      YAZ "Günlük limit aşılıyor! Limit: " + gunlukLimit + " TL"
+                  DEĞİLSE
+                      # 9. Para verme işlemi
+                      bakiye = bakiye - tutar
+                      gunlukCekilen = gunlukCekilen + tutar
+                      YAZ tutar + " TL veriliyor..."
+                      YAZ "Lütfen paranızı ve fişinizi alınız."
+                  SON						
+              SON
+          SON
+        
+          # 10. Başka işlem seçeneği
+          YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+          OKU cevap
+          EĞER cevap = "E" İSE
+              islemDevam = EVET
+          DEĞİLSE
+              islemDevam = HAYIR
+              YAZ "Kartınızı alınız. İyi günler!"
+              SON
+          SON
+      SON DÖNGÜ
+
+  DEĞİLSE
+      YAZ "PIN doğrulanamadı. İşlem sonlandırıldı."
+  SON
+
+SON
+bu kodu graphız dot koduna çevır
+Elbette!
+Aşağıda yazdığın ATM Para Çekme Sistemi pseudocode’unun mantığına uygun hazırlanmış Graphviz (DOT) kodu yer alıyor.
+Bu diyagram, PIN doğrulama (3 hak), bakiye kontrolü, 20 TL katı kontrolü, günlük limit ve işlem tekrarı döngülerini içerir
+digraph ATM_ParaCekme {
+  rankdir=TB;
+  node [shape=box, fontname="Helvetica", fontsize=10];
+  edge [fontname="Helvetica", fontsize=9];
+
+  Start [shape=oval, label="BAŞLA"];
+  InsertCard [label="Kart takıldı"];
+  ReadCard [label="Kart okunuyor"];
+  CardError [color=red, label="Kart okunamadı\nİşlem sonlandır"];
+  
+  PinStart [label="PIN gir (3 hak)"];
+  PinCheck [shape=diamond, label="PIN doğru mu?"];
+  PinWrong [label="Hatalı PIN\nKalan hak = 3 - deneme"];
+  BlockCard [color=red, label="3 hatalı giriş\nKart bloke\nİşlem sonlandır"];
+
+  Balance [label="Bakiye sorgula"];
+  GetAmount [label="Çekilmek istenen tutarı gir"];
+  EnoughBalance [shape=diamond, label="Bakiye yeterli mi?"];
+  Mult20 [shape=diamond, label="20 TL'nin katı mı?"];
+  LimitCheck [shape=diamond, label="Günlük limit aşılıyor mu?"];
+
+  Dispense [style=filled, fillcolor="#e0ffe0", label="Para ver\nFiş çıkar\nBakiye güncelle"];
+  AskRepeat [shape=diamond, label="Başka işlem yapmak ister misiniz?"];
+  End [shape=oval, label="SON\nKart iade edilir"];
+
+  # Akış bağlantıları
+  Start -> InsertCard -> ReadCard;
+  ReadCard -> CardError [label="Hatalı", color=red, style=dashed];
+  ReadCard -> PinStart [label="Doğru"];
+
+  PinStart -> PinCheck;
+  PinCheck -> Balance [label="Evet", color=green];
+  PinCheck -> PinWrong [label="Hayır", color=red];
+  PinWrong -> PinCheck [label="Hak kaldıysa"];
+  PinWrong -> BlockCard [label="3 hata", color=red];
+  BlockCard -> End;
+
+  Balance -> GetAmount;
+  GetAmount -> EnoughBalance;
+
+  EnoughBalance -> Mult20 [label="Evet"];
+  EnoughBalance -> AskRepeat [label="Hayır (Yetersiz bakiye)"];
+
+  Mult20 -> LimitCheck [label="Evet"];
+  Mult20 -> AskRepeat [label="Hayır (20 TL katı değil)"];
+
+  LimitCheck -> Dispense [label="Hayır (Aşılmadı)"];
+  LimitCheck -> AskRepeat [label="Evet (Limit aşıldı)"];
+
+  Dispense -> AskRepeat;
+  AskRepeat -> Balance [label="Evet"];
+  AskRepeat -> End [label="Hayır"];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
