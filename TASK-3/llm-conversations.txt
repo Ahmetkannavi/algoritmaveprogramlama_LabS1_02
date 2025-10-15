@@ -1,0 +1,163 @@
+Hastane Randevu ve Tahlil Sistemi için detaylı pseudocode yaz Hasta kimlik do˘grulama (TC No) ˙ I¸slem se¸cimi: 1-Randevu Al, 2-Tahlil Sonucu G¨or (ko¸sul) Randevu mod¨ul¨u: Poliklinik se¸cimi, doktor listesi, uygun saatler (d¨ong¨u) Randevu onayı ve SMS g¨onderimi Tahlil mod¨ul¨u: Tahlil var mı kontrol¨u (ko¸sul) Sonu¸c hazır mı kontrol¨u (ko¸sul) Sonu¸c g¨or¨unt¨uleme veya bekleme mesajı Sonu¸cları PDF indir se¸cene˘gi Ba¸ska i¸slem yapmak ister misiniz? (d¨ong¨u)
+BAŞLA
+    YAZ "Hastane Randevu ve Tahlil Sistemine Hoş Geldiniz."
+    YAZ "Lütfen TC Kimlik Numaranızı giriniz:"
+    OKU tc_no
+
+    EĞER tc_no geçerli formatta İSE
+        YAZ "Kimlik doğrulandı."
+    DEĞİLSE
+        YAZ "Hatalı TC Kimlik No! Lütfen tekrar deneyiniz."
+        GİT BAŞA
+    BİTİR EĞER
+
+    DÖNGÜ kullanıcı çıkış yapmak isteyene kadar
+        YAZ "Lütfen yapmak istediğiniz işlemi seçiniz:"
+        YAZ "1 - Randevu Al"
+        YAZ "2 - Tahlil Sonucu Gör"
+        YAZ "3 - Çıkış"
+        OKU secim
+
+        EĞER secim = 1 İSE
+            // RANDEVU MODÜLÜ
+            YAZ "Poliklinik listesini görüntülüyorsunuz."
+            YAZ "Lütfen bir poliklinik seçiniz:"
+            OKU poliklinik
+
+            YAZ "Seçilen polikliniğe ait doktor listesi:"
+            doktor_listesini_göster(poliklinik)
+
+            YAZ "Lütfen doktor seçiniz:"
+            OKU doktor
+
+            YAZ "Uygun saatler listeleniyor..."
+            DÖNGÜ uygun saatler bitene kadar
+                uygun_saatleri_göster(doktor)
+                YAZ "Bir saat seçiniz:"
+                OKU saat
+                EĞER saat uygun İSE
+                    YAZ "Randevunuz oluşturuluyor..."
+                    randevu_kaydet(tc_no, doktor, saat)
+                    YAZ "Randevunuz başarıyla oluşturuldu!"
+                    YAZ "SMS ile bilgilendirme gönderildi."
+                    ÇIK
+                DEĞİLSE
+                    YAZ "Bu saat dolu, lütfen başka bir saat seçiniz."
+                BİTİR EĞER
+            DÖNGÜ SONU
+
+        DEĞİLSE EĞER secim = 2 İSE
+            // TAHLİL MODÜLÜ
+            YAZ "Tahlil sonuçları kontrol ediliyor..."
+            EĞER hastanın_tahlili_var_mı(tc_no) İSE
+                YAZ "Tahlil bulundu. Hazır mı kontrol ediliyor..."
+                EĞER tahlil_hazır_mı(tc_no) İSE
+                    YAZ "Tahlil sonuçlarınız hazır!"
+                    tahlil_sonuçlarını_göster(tc_no)
+                    YAZ "Sonuçları PDF olarak indirmek ister misiniz? (E/H)"
+                    OKU indirme
+                    EĞER indirme = "E" İSE
+                        pdf_indir(tc_no)
+                        YAZ "PDF başarıyla indirildi."
+                    DEĞİLSE
+                        YAZ "İndirme işlemi iptal edildi."
+                    BİTİR EĞER
+                DEĞİLSE
+                    YAZ "Tahlil sonuçlarınız henüz hazır değil. Lütfen daha sonra tekrar deneyiniz."
+                BİTİR EĞER
+            DEĞİLSE
+                YAZ "Sistemde tahlil kaydınız bulunmamaktadır."
+            BİTİR EĞER
+
+        DEĞİLSE EĞER secim = 3 İSE
+            YAZ "Sistemden çıkılıyor..."
+            ÇIK
+        DEĞİLSE
+            YAZ "Geçersiz seçim! Lütfen 1, 2 veya 3 giriniz."
+        BİTİR EĞER
+
+        YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+        OKU devam           
+        EĞER devam = "H" İSE
+            ÇIK
+        BİTİR EĞER
+    DÖNGÜ SONU
+
+    YAZ "İyi günler dileriz. Sağlıklı kalın!"
+BİTİR
+bu kodu graphız dot koduna çevır
+digraph HospitalSystem {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontsize=11];
+
+    start [label="BAŞLA"];
+    tc_input [label="TC Kimlik No gir"];
+    tc_check [shape=diamond, label="TC geçerli mi?"];
+    menu [label="1-Randevu Al\n2-Tahlil Sonucu Gör\n3-Çıkış"];
+    choice_check [shape=diamond, label="Seçim?"];
+    exit [label="Sistemden çıkış"];
+    end [shape=oval, label="BİTİR"];
+
+    // --- Randevu Modülü ---
+    poly_select [label="Poliklinik seç"];
+    doctor_list [label="Doktor listesini görüntüle"];
+    doctor_select [label="Doktor seç"];
+    time_loop [label="Uygun saatleri göster (DÖNGÜ)"];
+    time_check [shape=diamond, label="Saat uygun mu?"];
+    create_app [label="Randevu oluştur\nSMS gönder"];
+    time_full [label="Saat dolu!"];
+    
+    // --- Tahlil Modülü ---
+    test_check [shape=diamond, label="Tahlil var mı?"];
+    ready_check [shape=diamond, label="Tahlil hazır mı?"];
+    show_result [label="Sonuçları görüntüle"];
+    download_ask [label="PDF indirilsin mi?"];
+    download_yes [label="PDF indirildi"];
+    download_no [label="İndirme iptal"];
+    not_ready [label="Tahlil henüz hazır değil"];
+    no_test [label="Tahlil kaydı bulunamadı"];
+
+    again [label="Başka işlem yapmak ister misiniz? (E/H)"];
+    invalid [label="Geçersiz seçim"];
+
+    // --- Akış bağlantıları ---
+    start -> tc_input -> tc_check;
+    tc_check -> menu [label="Evet"];
+    tc_check -> end [label="Hayır"];
+
+    menu -> choice_check;
+
+    choice_check -> poly_select [label="1: Randevu Al"];
+    choice_check -> test_check [label="2: Tahlil Sonucu Gör"];
+    choice_check -> exit [label="3: Çıkış"];
+    choice_check -> invalid [label="Diğer"];
+
+    // --- Randevu akışı ---
+    poly_select -> doctor_list -> doctor_select -> time_loop -> time_check;
+    time_check -> create_app [label="Evet"];
+    time_check -> time_full [label="Hayır"];
+    create_app -> again;
+    time_full -> time_loop;
+
+    // --- Tahlil akışı ---
+    test_check -> ready_check [label="Evet"];
+    test_check -> no_test [label="Hayır"];
+    ready_check -> show_result [label="Evet"];
+    ready_check -> not_ready [label="Hayır"];
+    show_result -> download_ask;
+    download_ask -> download_yes [label="Evet"];
+    download_ask -> download_no [label="Hayır"];
+    download_yes -> again;
+    download_no -> again;
+    not_ready -> again;
+    no_test -> again;
+
+    // --- Döngüler ---
+    invalid -> again;
+    again -> menu [label="Evet"];
+    again -> exit [label="Hayır"];
+    exit -> end;
+}
+
+
+
