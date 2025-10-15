@@ -1,52 +1,86 @@
-digraph HastaneSistemi {
-    rankdir=TB;
-    node [shape=rectangle, style=rounded, fontname="Arial"];
+BAŞLA
+    YAZ "Hastane Randevu ve Tahlil Sistemine Hoş Geldiniz."
+    YAZ "Lütfen TC Kimlik Numaranızı giriniz:"
+    OKU tc_no
 
-    // --- Modül 1: Randevu Alma ---
-    StartR [label="BAŞLA: Randevu Alma"];
-    KimlikR [label="Kimlik doğrulama"];
-    KontrolKimlikR [shape=diamond,label="Kimlik geçerli mi?"];
-    Poliklinik [label="Poliklinik seçimi"];
-    Doktor [label="Doktor listesi görüntüle"];
-    Saat [label="Uygun saatleri göster"];
-    Onay [label="Randevuyu onayla"];
-    SMS [label="SMS gönder"];
-    MesajOK_R [label="Randevu başarıyla oluşturuldu"];
-    MesajNO_R [label="Kimlik doğrulama başarısız"];
+    EĞER tc_no geçerli formatta İSE
+        YAZ "Kimlik doğrulandı."
+    DEĞİLSE
+        YAZ "Hatalı TC Kimlik No! Lütfen tekrar deneyiniz."
+        GİT BAŞA
+    BİTİR EĞER
 
-    // Akış Modül 1
-    StartR -> KimlikR -> KontrolKimlikR;
-    KontrolKimlikR -> Poliklinik [label="EVET"];
-    KontrolKimlikR -> MesajNO_R [label="HAYIR"];
-    Poliklinik -> Doktor -> Saat -> Onay -> SMS -> MesajOK_R;
+    DÖNGÜ kullanıcı çıkış yapmak isteyene kadar
+        YAZ "Lütfen yapmak istediğiniz işlemi seçiniz:"
+        YAZ "1 - Randevu Al"
+        YAZ "2 - Tahlil Sonucu Gör"
+        YAZ "3 - Çıkış"
+        OKU secim
 
-    // --- Modül 2: Tahlil Sonuçları ---
-    StartT [label="BAŞLA: Tahlil Sonuçları"];
-    KimlikT [label="Kimlik doğrulama"];
-    KontrolKimlikT [shape=diamond,label="Kimlik geçerli mi?"];
-    TahlilVar [shape=diamond,label="Tahlil mevcut mu?"];
-    SonucHazir [shape=diamond,label="Sonuç hazır mı?"];
-    Goruntule [label="Sonuç görüntüle"];
-    PDF [label="PDF indir"];
-    MesajHazirDegil [label="Sonuçlar henüz hazır değil"];
-    MesajYok [label="Tahlil bulunamadı"];
-    MesajNO_T [label="Kimlik doğrulama başarısız"];
+        EĞER secim = 1 İSE
+            // RANDEVU MODÜLÜ
+            YAZ "Poliklinik listesini görüntülüyorsunuz."
+            YAZ "Lütfen bir poliklinik seçiniz:"
+            OKU poliklinik
 
-    // Akış Modül 2
-    StartT -> KimlikT -> KontrolKimlikT;
-    KontrolKimlikT -> TahlilVar [label="EVET"];
-    KontrolKimlikT -> MesajNO_T [label="HAYIR"];
-    TahlilVar -> SonucHazir [label="EVET"];
-    TahlilVar -> MesajYok [label="HAYIR"];
-    SonucHazir -> Goruntule [label="EVET"];
-    SonucHazir -> MesajHazirDegil [label="HAYIR"];
-    Goruntule -> PDF;
+            YAZ "Seçilen polikliniğe ait doktor listesi:"
+            doktor_listesini_göster(poliklinik)
 
-    // --- Bitiş Noktaları ---
-    MesajOK_R -> End [shape=oval,label="BİTİR"];
-    MesajNO_R -> End;
-    PDF -> End;
-    MesajHazirDegil -> End;
-    MesajYok -> End;
-    MesajNO_T -> End;
-}
+            YAZ "Lütfen doktor seçiniz:"
+            OKU doktor
+
+            YAZ "Uygun saatler listeleniyor..."
+            DÖNGÜ uygun saatler bitene kadar
+                uygun_saatleri_göster(doktor)
+                YAZ "Bir saat seçiniz:"
+                OKU saat
+                EĞER saat uygun İSE
+                    YAZ "Randevunuz oluşturuluyor..."
+                    randevu_kaydet(tc_no, doktor, saat)
+                    YAZ "Randevunuz başarıyla oluşturuldu!"
+                    YAZ "SMS ile bilgilendirme gönderildi."
+                    ÇIK
+                DEĞİLSE
+                    YAZ "Bu saat dolu, lütfen başka bir saat seçiniz."
+                BİTİR EĞER
+            DÖNGÜ SONU
+
+        DEĞİLSE EĞER secim = 2 İSE
+            // TAHLİL MODÜLÜ
+            YAZ "Tahlil sonuçları kontrol ediliyor..."
+            EĞER hastanın_tahlili_var_mı(tc_no) İSE
+                YAZ "Tahlil bulundu. Hazır mı kontrol ediliyor..."
+                EĞER tahlil_hazır_mı(tc_no) İSE
+                    YAZ "Tahlil sonuçlarınız hazır!"
+                    tahlil_sonuçlarını_göster(tc_no)
+                    YAZ "Sonuçları PDF olarak indirmek ister misiniz? (E/H)"
+                    OKU indirme
+                    EĞER indirme = "E" İSE
+                        pdf_indir(tc_no)
+                        YAZ "PDF başarıyla indirildi."
+                    DEĞİLSE
+                        YAZ "İndirme işlemi iptal edildi."
+                    BİTİR EĞER
+                DEĞİLSE
+                    YAZ "Tahlil sonuçlarınız henüz hazır değil. Lütfen daha sonra tekrar deneyiniz."
+                BİTİR EĞER
+            DEĞİLSE
+                YAZ "Sistemde tahlil kaydınız bulunmamaktadır."
+            BİTİR EĞER
+
+        DEĞİLSE EĞER secim = 3 İSE
+            YAZ "Sistemden çıkılıyor..."
+            ÇIK
+        DEĞİLSE
+            YAZ "Geçersiz seçim! Lütfen 1, 2 veya 3 giriniz."
+        BİTİR EĞER
+
+        YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+        OKU devam
+        EĞER devam = "H" İSE
+            ÇIK
+        BİTİR EĞER
+    DÖNGÜ SONU
+
+    YAZ "İyi günler dileriz. Sağlıklı kalın!"
+BİTİR
